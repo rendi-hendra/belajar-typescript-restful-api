@@ -26,7 +26,7 @@ export class UserController {
       const request: LoginUserRequest = req.body as LoginUserRequest;
       const response = await UserService.login(request);
       res.status(200).json({
-        data: response.token,
+        data: response,
       });
     } catch (e) {
       next(e);
@@ -38,7 +38,10 @@ export class UserController {
       const request: FindUserTokenRequest = req.body as FindUserTokenRequest;
       const response = await UserService.findToken(request);
       res.status(200).json({
-        data: response,
+        data: {
+          username: response.username,
+          token: response.token,
+        },
       });
     } catch (e) {
       next(e);

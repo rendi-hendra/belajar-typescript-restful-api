@@ -74,6 +74,7 @@ Request Body :
 
 ```json
 {
+  "username": "rendi",
   "token": "666666"
 }
 ```
@@ -82,7 +83,10 @@ Response Body (Success) :
 
 ```json
 {
-  "data": "OK"
+  "data": {
+    "username": "rendi",
+    "token": "666666"
+  }
 }
 ```
 
@@ -90,7 +94,7 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors": "Token not found"
+  "errors": "Token and Username is invalid"
 }
 ```
 

@@ -13,6 +13,7 @@ export type CreateUserRequest = {
 };
 
 export type FindUserTokenRequest = {
+  username: string;
   token: string;
 };
 

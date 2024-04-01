@@ -76,14 +76,15 @@ export class UserService {
   }
 
   static async findToken(token: FindUserTokenRequest): Promise<User> {
-    const tokens = await prismaClient.user.findFirst({
+    const tokens = await prismaClient.user.findUnique({
       where: {
+        username: token.username,
         token: token.token,
       },
     });
 
     if (!tokens) {
-      throw new ResponseError(404, "Token not found");
+      throw new ResponseError(404, "Token and Username is invalid");
     }
 
     return tokens;

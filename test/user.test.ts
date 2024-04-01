@@ -83,17 +83,43 @@ describe("POST /api/users/login", () => {
 describe("GET /api/users/token", () => {
   it("should be able to get token", async () => {
     const response = await supertest(web).get("/api/users/token").send({
+      username: "babe",
       token: "1655ad74-dfd8-4390-b2d4-579dc828a911",
     });
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
-    expect(response.body.data.token).toBeDefined();
+    expect(response.body.data.username).toBe("babe");
+    expect(response.body.data.token).toBe(
+      "1655ad74-dfd8-4390-b2d4-579dc828a911"
+    );
+  });
+
+  it("should reject get token if username is invalid", async () => {
+    const response = await supertest(web).get("/api/users/token").send({
+      username: "salah",
+      token: "1655ad74-dfd8-4390-b2d4-579dc828a911",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
   });
 
   it("should reject get token if token is invalid", async () => {
     const response = await supertest(web).get("/api/users/token").send({
+      username: "babe",
       token: "1655ad74-dfd8-4390-b2d4-579dc828a9119",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
+  it("should reject get token if token and username is invalid", async () => {
+    const response = await supertest(web).get("/api/users/token").send({
+      username: "",
+      token: "",
     });
 
     logger.debug(response.body);
