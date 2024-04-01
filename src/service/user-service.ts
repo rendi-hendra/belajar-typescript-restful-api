@@ -3,6 +3,7 @@ import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response-error";
 import {
   CreateUserRequest,
+  FindUserTokenRequest,
   LoginUserRequest,
   UpdateUserRequest,
   UserResponse,
@@ -73,6 +74,43 @@ export class UserService {
     response.token = user.token!;
     return response;
   }
+
+  static async findToken(token: FindUserTokenRequest): Promise<User> {
+    const tokens = await prismaClient.user.findFirst({
+      where: {
+        token: token.token,
+      },
+    });
+
+    if (!tokens) {
+      throw new ResponseError(404, "Token not found");
+    }
+
+    return tokens;
+  }
+
+  // static async checkContactMustExists(
+  //   token: string
+  // ): Promise<User> {
+  //   const user = await prismaClient.user.findUnique({
+  //     where: {
+  //       token: token
+  //     },
+  //   });
+
+  //   if (!contact) {
+  //     throw new ResponseError(404, "Contact not found");
+  //   }
+
+  //   return contact;
+  // }
+  // static async findToken(user: User): Promise<UserResponse> {
+  //   const token  = await prismaClient.user.findUnique({
+  //     where: {
+  //       token: user.token
+  //     }
+  //   })
+  // }
 
   static async get(user: User): Promise<UserResponse> {
     return toUserResponse(user);

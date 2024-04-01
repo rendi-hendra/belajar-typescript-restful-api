@@ -80,6 +80,28 @@ describe("POST /api/users/login", () => {
   });
 });
 
+describe("GET /api/users/token", () => {
+  it("should be able to get token", async () => {
+    const response = await supertest(web).get("/api/users/token").send({
+      token: "1655ad74-dfd8-4390-b2d4-579dc828a911",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.token).toBeDefined();
+  });
+
+  it("should reject get token if token is invalid", async () => {
+    const response = await supertest(web).get("/api/users/token").send({
+      token: "1655ad74-dfd8-4390-b2d4-579dc828a9119",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
+});
+
 describe("GET /api/users/current", () => {
   beforeEach(async () => {
     await UserTest.create();

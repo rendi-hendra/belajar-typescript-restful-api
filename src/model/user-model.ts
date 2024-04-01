@@ -12,6 +12,10 @@ export type CreateUserRequest = {
   password: string;
 };
 
+export type FindUserTokenRequest = {
+  token: string;
+};
+
 export type LoginUserRequest = {
   username: string;
   password: string;

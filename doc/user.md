@@ -66,6 +66,34 @@ Response Body (Failed) :
 }
 ```
 
+## Find Token
+
+Endpoint : GET /api/users/token
+
+Request Body :
+
+```json
+{
+  "token": "666666"
+}
+```
+
+Response Body (Success) :
+
+```json
+{
+  "data": "OK"
+}
+```
+
+Response Body (Failed) :
+
+```json
+{
+  "errors": "Token not found"
+}
+```
+
 ## Get User
 
 Endpoint : GET /api/users/current

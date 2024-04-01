@@ -1,4 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { FindUserTokenRequest } from "./../model/user-model";
+import { NextFunction, Request, Response, response } from "express";
 import {
   CreateUserRequest,
   LoginUserRequest,
@@ -24,6 +25,18 @@ export class UserController {
     try {
       const request: LoginUserRequest = req.body as LoginUserRequest;
       const response = await UserService.login(request);
+      res.status(200).json({
+        data: response.token,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async findTokenUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: FindUserTokenRequest = req.body as FindUserTokenRequest;
+      const response = await UserService.findToken(request);
       res.status(200).json({
         data: response,
       });
