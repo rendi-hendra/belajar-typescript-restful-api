@@ -25,6 +25,8 @@ export class UserController {
     try {
       const request: LoginUserRequest = req.body as LoginUserRequest;
       const response = await UserService.login(request);
+      res.cookie("username", response.username, { httpOnly: true });
+      res.cookie("token", response.token, { httpOnly: true });
       res.status(200).json({
         data: response,
       });
@@ -37,6 +39,7 @@ export class UserController {
     try {
       const request: FindUserTokenRequest = req.body as FindUserTokenRequest;
       const response = await UserService.findToken(request);
+
       res.status(200).json({
         data: {
           username: response.username,

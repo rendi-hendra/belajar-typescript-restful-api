@@ -4,4 +4,4 @@ import { UserController } from "../controller/user-controller";
 export const publicRouter = express.Router();
 publicRouter.post("/api/users", UserController.register);
 publicRouter.post("/api/users/login", UserController.login);
-publicRouter.get("/api/users/token", UserController.findTokenUser);
+publicRouter.post("/api/users/token", UserController.findTokenUser);
